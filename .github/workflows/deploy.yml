@@ -1,0 +1,33 @@
+name: Angular CI/CD to IIS
+
+on:
+  push:
+    branches: [main]   # Change if your main branch is named differently
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Angular App
+      run: npm run build -- --configuration=production
+
+    - name: Deploy to IIS Server via SCP
+      uses: gohildharmik/my-angular-app17@v1.0.0
+      with:
+        local: dist/production/
+        remote: /f$/Developer/Dharmik/GitHub/my-angular-app17/      
+        host: ${{ '103.216.81.99' }}
+        username: ${{ 'MYANGULARAPPDEPLOYER' }}
+        password: ${{ 'Swami@123#$' }}
