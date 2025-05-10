@@ -28,6 +28,6 @@ jobs:
       with:
         local: dist/production/
         remote: /f$/Developer/Dharmik/GitHub/my-angular-app17/      
-        host: ${{ ['103.216.81.99'] }}
-        username: ${{ ['MYANGULARAPPDEPLOYER'] }}
-        password: ${{ ['Swami@123#$'] }}
+        host: ${{'103.216.81.99'}}
+        username: ${{'MYANGULARAPPDEPLOYER'}}
+        password: ${{'Swami@123#$'}}
