@@ -2,5 +2,5 @@ name: 'my-angular-app'
 description: 'Deploy Angular app to IIS'
 runs:
   using: 'node20'
-  main: 'dist/index.js'
+  main: 'index.js'
   
