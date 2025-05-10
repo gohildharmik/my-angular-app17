@@ -24,7 +24,7 @@ jobs:
       run: npm run build -- --configuration=production
 
     - name: Deploy to IIS Server via SCP
-      uses: gohildharmik/my-angular-app17@v1.0.3
+      uses: gohildharmik/my-angular-app17@v1.0.4
       with:
         local: dist/production/
         remote: /f$/Developer/Dharmik/GitHub/my-angular-app17/      
