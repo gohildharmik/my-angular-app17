@@ -9,19 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Checkout Code
-    #   uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-    # - name: Setup Node.js
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: '20'
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
 
-    # - name: Install Dependencies
-    #   run: npm install
+    - name: Install Dependencies
+      run: npm install
 
-    # - name: Build Angular App
-    #   run: npm run build -- --configuration=production
+    - name: Build Angular App
+      run: npm run build -- --configuration=production
 
     # - name: Deploy to IIS Server via SCP
     #   uses: garygrossgarten/github-action-scp@release
@@ -32,9 +32,8 @@ jobs:
     #     username: ${{ 'admin' }}
     #     password: ${{ 'swami123' }}
       
-    - name: Build
-      run: npm run build
-      
+
+
     - name: Copy files via SSH
       uses: appleboy/scp-action@v1
       with:
