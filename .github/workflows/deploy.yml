@@ -27,7 +27,7 @@ jobs:
       uses: gohildharmik/my-angular-app17@v1.0.4
       with:
         local: dist/my-anglular-app/
-        remote: \\WIN-A450TQUFJI8\my-angular-app17      
-        host: ${{'103.216.81.99'}}
-        username: ${{'DGOHIL'}}
-        password: ${{'dmg@baps2009'}}
+        remote: /c$/inetpub/     
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
