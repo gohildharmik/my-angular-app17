@@ -28,6 +28,6 @@ jobs:
       with:
         local: dist/my-anglular-app/
         remote: /c$/inetpub/     
-        host: ${{ secrets.DEPLOY_HOST }}
-        username: ${{ secrets.DEPLOY_USER }}
-        password: ${{ secrets.DEPLOY_PASS }}
+        host: ${{ '2405:204:8104:d116:1428:6c77:b5ca:be4a' }}
+        username: ${{ 'admin' }}
+        password: ${{ 'swami123' }}
