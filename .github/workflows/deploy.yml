@@ -28,7 +28,7 @@ jobs:
     #   with:
     #     local: /dist/*
     #     remote: /c$/inetpub/     
-    #     host: ${{ '2405:204:8104:d116:c4a7:1179:3582:7f3b' }}
+    #     host: ${{ '2405:204:8104:d116:c4a7:1179:3582::7f3b' }}
     #     username: ${{ 'admin' }}
     #     password: ${{ 'swami123' }}
       
