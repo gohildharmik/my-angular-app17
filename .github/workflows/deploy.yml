@@ -23,16 +23,16 @@ jobs:
     - name: Build Angular App
       run: npm run build -- --configuration=production
 
-    # - name: Deploy to IIS Server via SCP
-    #   uses: gohildharmik/my-angular-app17@v1.0.4
-    #   with:
-    #     local: dist/my-anglular-app/
-    #     remote: /c$/inetpub/     
-    #     host: ${{ '2405:204:8104:d116:1428:6c77:b5ca:be4a' }}
-    #     username: ${{ 'admin' }}
-    #     password: ${{ 'swami123' }}
+    - name: Deploy to IIS Server via SCP
+      uses: gohildharmik/my-angular-app17@v1.0.4
+      with:
+        local: dist/my-anglular-app/
+        remote: /c$/inetpub/     
+        host: ${{ '2405:204:8104:d116:c4a7:1179:3582:7f3b' }}
+        username: ${{ 'admin' }}
+        password: ${{ 'swami123' }}
       
-    - name: Deploy via scp
-      run: scp -r dist/my-anglular-app/* admin@2405:204:8104:d116:1428:6c77:b5ca:be4a:/c/inetpub/
-      env:
-        SSHPASS: ${{ 'swami123' }}
+    # - name: Deploy via scp
+    #   run: scp -r dist/my-anglular-app/* admin@2405:204:8104:d116:c4a7:1179:3582:7f3b:/c/inetpub/
+    #   env:
+    #     SSHPASS: ${{ 'swami123' }}
