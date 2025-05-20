@@ -41,5 +41,5 @@ jobs:
           username: ${{ 'admin' }}
           password: ${{ 'swami123' }}
           port: ${{ '22' }}
-          source: "tests/*"
-          target: inetpub
+          source: "tests/a.txt,tests/b.txt"
+          target: "inetpub"
