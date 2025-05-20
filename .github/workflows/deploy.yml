@@ -28,11 +28,17 @@ jobs:
     #   with:
     #     local: /dist/*
     #     remote: /c$/inetpub/     
-    #     host: ${{ '49.34.161.34' }}
+    #     host: ${{ '2405:204:8104:d116:c4a7:1179:3582:7f3b' }}
     #     username: ${{ 'admin' }}
     #     password: ${{ 'swami123' }}
       
-    - name: Deploy via scp
-      run: scp -r /c/Users/admin/Desktop/temp/ajdas/* admin@2405:204:8104:d116:c4a7:1179:3582:7f3b:/c/inetpub/
-      env:
-        SSHPASS: ${{ 'swami123' }}
+
+    - name: Copy files via SSH
+      uses: appleboy/scp-action@v1
+      with:
+          host: ${{ '2405:204:8104:d116:c4a7:1179:3582:7f3b' }}
+          username: ${{ 'admin' }}
+          password: ${{ 'swami123' }}
+          port: ${{ '22' }}
+          source: "tests/a.txt,tests/b.txt"
+          target: /c$/inetpub/
