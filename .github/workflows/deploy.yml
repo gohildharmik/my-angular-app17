@@ -33,6 +33,6 @@ jobs:
     #     password: ${{ 'swami123' }}
       
     - name: Deploy via scp
-      run: scp -r dist/my-anglular-app/ admin@2405:204:8104:d116:c4a7:1179:3582:7f3b:/c/inetpub/
+      run: scp -r /d/a/my-angular-app17/my-angular-app17/dist/my-angular-app/* admin@2405:204:8104:d116:c4a7:1179:3582:7f3b:/c/inetpub/
       env:
         SSHPASS: ${{ 'swami123' }}
