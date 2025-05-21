@@ -60,8 +60,7 @@ jobs:
       with:
         command: ls -a
         host: ${{ secrets.SSH_HOST }}
-        username: admin
-        password: ${{ '' }}
-        privateKey: ${{ secrets.SSH_PRIVATE_KEY}}
+        username: admin        
+        key: ${{ secrets.SSH_PRIVATE_KEY}}
       env:
         CI: true
