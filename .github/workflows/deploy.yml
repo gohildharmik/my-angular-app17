@@ -55,14 +55,13 @@ jobs:
     #   run: |
     #     ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostname && whoami"
 
-    - name: Copy to Windows
-      uses: appleboy/scp-action@v1
+    - name: ls -a via OPEN SSH Private Key
+      uses: garygrossgarten/github-action-ssh@release
       with:
+        command: ls -a
         host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        source: "."
-        target: "~/inetpub"
-        tar_dereference: true
-        rm: true
+        username: garygrossgarten
+        password: ${{ secrets.PASSPHRASE }}
+        privateKey: ${{ secrets.PRIVATE_KEY}}
+      env:
+        CI: true
