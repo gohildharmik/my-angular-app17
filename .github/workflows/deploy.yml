@@ -57,11 +57,14 @@ jobs:
     #       source: "."
     #       target: "~/inetpub"
 
-    - name: Upload files via scp manually
+    - name: Test SSH connection over IPv6
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan -6 -H "[${{ secrets.SSH_HOST }}]" >> ~/.ssh/known_hosts
-
-        scp -6 -i ~/.ssh/id_ed25519 -r . "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]:~/inetpub"
+    
+        # Add remote host to known_hosts (without brackets)
+        ssh-keyscan -6 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+    
+        # Now test the connection (use brackets here)
+        ssh -6 -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ SSH connection successful!"
