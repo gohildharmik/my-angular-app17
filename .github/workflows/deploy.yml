@@ -44,13 +44,17 @@ jobs:
     #       source: "."
     #       target: "~/inetpub"
 
-    - name: Set up ed25519 SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan -t ed25519 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+    # - name: Set up ed25519 SSH key
+    #   run: |
+    #     mkdir -p ~/.ssh
+    #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+    #     chmod 600 ~/.ssh/id_ed25519
+    #     ssh-keyscan -t ed25519 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-    - name: SSH and run command
+    # - name: SSH and run command
+    #   run: |
+    #     ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostname && whoami"
+
+    - name: Debug SSH
       run: |
-        ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostname && whoami"
+          ssh -vvv -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
