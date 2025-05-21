@@ -37,9 +37,8 @@ jobs:
     - name: Copy files via SSH
       uses: appleboy/scp-action@v1
       with:
-          host: ${{ '2405:204:8104:d116:c4a7:1179:3582::7f3b' }}
+          host: ${{ '[2405:204:8104:d116:5c4a:73f8:52cf:5689]' }}
           username: ${{ 'admin' }}
-          password: ${{ 'swami123' }}
-          port: ${{ '22' }}
+          password: ${{ 'swami123' }}         
           source: "."
           target: "~/inetpub"
