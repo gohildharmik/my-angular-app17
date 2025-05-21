@@ -55,12 +55,12 @@ jobs:
     #   run: |
     #     ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostname && whoami"
 
-    - name: ls -a via OPEN SSH Private Key
-      uses: garygrossgarten/github-action-ssh@release
+    - name: Copy files via SSH
+      uses: appleboy/scp-action@v1
       with:
-        command: ls -a
-        host: ${{ secrets.SSH_HOST }}
-        username: admin        
-        key: ${{ secrets.SSH_PRIVATE_KEY}}
-      env:
-        CI: true
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22     
+          source: "."
+          target: "~/inetpub"
