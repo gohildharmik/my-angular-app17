@@ -55,12 +55,16 @@ jobs:
     #   run: |
     #     ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostname && whoami"
 
-    - name: Copy files via SSH
-      uses: appleboy/scp-action@v1
-      with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22     
-          source: "."
-          target: "~/inetpub"
+    - name: Debug SSH Host
+      run: |
+          echo "Host: ${{ secrets.SSH_HOST }}"
+
+    # - name: Copy files via SSH
+    #   uses: appleboy/scp-action@v1
+    #   with:
+    #       host: ${{ secrets.SSH_HOST }}
+    #       username: ${{ secrets.SSH_USER }}
+    #       key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #       port: 22     
+    #       source: "."
+    #       target: "~/inetpub"
