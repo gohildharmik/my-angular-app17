@@ -44,26 +44,24 @@ jobs:
     #       source: "."
     #       target: "~/inetpub"
 
-    # - name: Set up ed25519 SSH key
-    #   run: |
-    #     mkdir -p ~/.ssh
-    #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-    #     chmod 600 ~/.ssh/id_ed25519
-    #     ssh-keyscan -t ed25519 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-    # - name: SSH and run command
-    #   run: |
-    #     ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "hostname && whoami"
 
-    - name: Debug SSH Host
+   
+
+    # - name: Copy files via SSH
+    #   uses: appleboy/scp-action@v1
+    #   with:
+    #       host: "[${{ secrets.SSH_HOST }}]"
+    #       username: ${{ secrets.SSH_USER }}
+    #       key: ${{ secrets.SSH_PRIVATE_KEY }}        
+    #       source: "."
+    #       target: "~/inetpub"
+
+    - name: Upload files via scp manually
       run: |
-          echo "Host: ${{ secrets.SSH_HOST }}"
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh-keyscan -6 -H "[${{ secrets.SSH_HOST }}]" >> ~/.ssh/known_hosts
 
-    - name: Copy files via SSH
-      uses: appleboy/scp-action@v1
-      with:
-          host: "[${{ secrets.SSH_HOST }}]"
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}        
-          source: "."
-          target: "~/inetpub"
+        scp -6 -i ~/.ssh/id_ed25519 -r . "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]:~/inetpub"
