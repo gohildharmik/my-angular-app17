@@ -4,13 +4,13 @@ on:
   push:
     branches: [main]   # Change if your main branch is named differently
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
 
     # - name: Setup Node.js
     #   uses: actions/setup-node@v3
@@ -57,14 +57,17 @@ jobs:
     #       source: "."
     #       target: "~/inetpub"
 
-    - name: Test SSH connection over IPv6
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
+    #  on:
+    #   workflow_dispatch:
     
-        # Add remote host to known_hosts (without brackets)
-        ssh-keyscan -6 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-    
-        # Now test the connection (use brackets here)
-        ssh -6 -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ SSH connection successful!"
+jobs:
+  ssh-test:
+    runs-on: self-hosted
+    steps:
+      - name: Test SSH to IPv6 server
+        run: |
+          mkdir $env:USERPROFILE\.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $env:USERPROFILE\.ssh\id_ed25519
+          echo "`n" >> $env:USERPROFILE\.ssh\id_ed25519  # Fix line-endings if needed
+          ssh-keyscan -6 -H ${{ secrets.SSH_HOST }} >> $env:USERPROFILE\.ssh\known_hosts
+          ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
