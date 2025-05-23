@@ -66,8 +66,5 @@ jobs:
     steps:
       - name: Test SSH to IPv6 server
         run: |
-          mkdir $env:USERPROFILE\.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $env:USERPROFILE\.ssh\id_ed25519
-          echo "`n" >> $env:USERPROFILE\.ssh\id_ed25519  # Fix line-endings if needed
-          ssh-keyscan -6 -H ${{ secrets.SSH_HOST }} >> $env:USERPROFILE\.ssh\known_hosts
+          
           ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
