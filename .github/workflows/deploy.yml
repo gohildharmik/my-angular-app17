@@ -19,14 +19,14 @@ jobs:
       run: |        
         ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
 
-    # - name: Copy files via SSH
-    #   uses: appleboy/scp-action@v1
-    #   with:
-    #       host: "${{ secrets.SSH_HOST }}"
-    #       username: ${{ secrets.SSH_USER }}
-    #       key: ${{ secrets.SSH_PRIVATE_KEY }}        
-    #       source: "."
-    #       target: "~/inetpub"    
+    - name: Copy files via SSH
+      uses: appleboy/scp-action@v1
+      with:
+          host: "${{ secrets.SSH_HOST }}"
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}        
+          source: "."
+          target: "~/inetpub"    
 
     # - name: Setup Node.js
     #   uses: actions/setup-node@v3
