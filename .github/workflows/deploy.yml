@@ -2,15 +2,27 @@ name: Angular CI/CD to IIS
 
 on:
   push:
-    branches: [main]   # Change if your main branch is named differently
+    branches: [main]   
 
-# jobs:
-#   build-and-deploy:
-#     runs-on: ubuntu-latest
+ 
+    # Change if your main branch is named differently
 
-#     steps:
-#     - name: Checkout Code
-#       uses: actions/checkout@v3
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Copy files via SSH
+      uses: appleboy/scp-action@v1
+      with:
+          host: "[${{ secrets.SSH_HOST }}]"
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}        
+          source: "."
+          target: "~/inetpub"    
 
     # - name: Setup Node.js
     #   uses: actions/setup-node@v3
@@ -23,14 +35,7 @@ on:
     # - name: Build Angular App
     #   run: npm run build -- --configuration=production
 
-    # - name: Deploy to IIS Server via SCP
-    #   uses: garygrossgarten/github-action-scp@release
-    #   with:
-    #     local: /dist/*
-    #     remote: /c$/inetpub/     
-    #     host: ${{ '2405:204:8104:d116:c4a7:1179:3582::7f3b' }}
-    #     username: ${{ 'admin' }}
-    #     password: ${{ 'swami123' }}
+  
       
 
 
@@ -44,27 +49,14 @@ on:
     #       source: "."
     #       target: "~/inetpub"
 
-
-
-   
-
-    # - name: Copy files via SSH
-    #   uses: appleboy/scp-action@v1
-    #   with:
-    #       host: "[${{ secrets.SSH_HOST }}]"
-    #       username: ${{ secrets.SSH_USER }}
-    #       key: ${{ secrets.SSH_PRIVATE_KEY }}        
-    #       source: "."
-    #       target: "~/inetpub"
-
-    #  on:
-    #   workflow_dispatch:
     
-jobs:
-  ssh-test:
-    runs-on: self-hosted
-    steps:
-      - name: Test SSH to IPv6 server
-        run: |
+
+
+# jobs:
+#   ssh-test:
+#     runs-on: self-hosted
+#     steps:
+#       - name: Test SSH to IPv6 server
+#         run: |
           
-          ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
+#           ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
