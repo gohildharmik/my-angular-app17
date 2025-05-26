@@ -33,7 +33,7 @@ jobs:
       - name: Copy build files to Windows server using SCP    
         shell: powershell     
         run: |     
-            scp $env:USERPROFILE\.ssh\id_ed25519 -r dist/my-angular-app17/* ${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]:/c/inetpub/wwwroot/my-angular-app17/
+            scp $env:USERPROFILE\.ssh\id_ed25519 -r dist/my-angular-app17/* ${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]:C:\inetpub\wwwroot\my-angular-app17
 
      
 
