@@ -30,14 +30,9 @@ jobs:
         run: |        
           ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=no "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
 
-      - name: Copy build files to Windows server using SCP
-        env:
-            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
-        run: |
-            echo "$env:SSH_PRIVATE_KEY" > key.pem
-            chmod 600 key.pem
-    
-            scp -i key.pem -r dist/my-angular-app17/* "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]":'/c/inetpub/wwwroot/my-angular-app17/'
+      - name: Copy build files to Windows server using SCP         
+        run: |     
+            scp $env:USERPROFILE\.ssh\id_ed25519 -r dist/my-angular-app17/* "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]":'/c/inetpub/wwwroot/my-angular-app17/'
 
    
    
