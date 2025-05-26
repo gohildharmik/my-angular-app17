@@ -30,7 +30,8 @@ jobs:
         run: |        
           ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=no "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
 
-      - name: Copy build files to Windows server using SCP         
+      - name: Copy build files to Windows server using SCP    
+        shell: powershell     
         run: |     
             scp $env:USERPROFILE\.ssh\id_ed25519 -r dist/my-angular-app17/* "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]:/c/inetpub/wwwroot/my-angular-app17/"
 
