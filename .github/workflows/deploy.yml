@@ -12,55 +12,32 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    # - name: Checkout Code
-    #   uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    - name: Test SSH to IPv6 server
-      run: |        
-        ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Copy files via SSH
-      uses: appleboy/scp-action@v1
-      with:
-          host: "${{ secrets.SSH_HOST }}"
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}        
-          source: "."
-          target: "."    
+      - name: Build Angular App
+        run: npm run build -- --configuration=production
 
-    # - name: Setup Node.js
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: '20'
+      - name: Test SSH to IPv6 server
+        run: |        
+          ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
 
-    # - name: Install Dependencies
-    #   run: npm install
+      - name: Copy build files to Windows server using SCP
+        env:
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
+        run: |
+            echo "$env:SSH_PRIVATE_KEY" > key.pem
+            chmod 600 key.pem
+    
+            scp -i key.pem -r dist/my-angular-app17/* "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]":'/c/inetpub/wwwroot/my-angular-app17/'
 
-    # - name: Build Angular App
-    #   run: npm run build -- --configuration=production
+   
+   
 
   
       
-
-
-    # - name: Copy files via SSH
-    #   uses: appleboy/scp-action@v1
-    #   with:
-    #       host: ${{ '2405:204:8104:d116:5c4a:73f8:52cf:5689' }}
-    #       username: ${{ 'admin' }}
-    #       key: ${{ 'b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACBgMOb+7BJFP8Y9V4a73XDLTnsErEGjcOs9G8z5nr2VvgAAAKD1RFmq9URZqgAAAAtzc2gtZWQyNTUxOQAAACBgMOb+7BJFP8Y9V4a73XDLTnsErEGjcOs9G8z5nr2VvgAAAEAOtDuk2tMvDK1ePLY0diq0+8I31TlxUKPQYXeoLVvxS2Aw5v7sEkU/xj1XhrvdcMtOewSsQaNw6z0bzPmevZW+AAAAGGdpdGh1Yi1hY3Rpb25AYXV0b21hdGlvbgECAwQF' }}
-    #       port: 22     
-    #       source: "."
-    #       target: "~/inetpub"
-
-    
-
-
-# jobs:
-#   ssh-test:
-#     runs-on: self-hosted
-#     steps:
-#       - name: Test SSH to IPv6 server
-#         run: |
-          
-#           ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
