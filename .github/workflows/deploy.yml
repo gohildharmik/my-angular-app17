@@ -30,21 +30,11 @@ jobs:
         run: |        
           ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=no "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
 
-      # - name: Copy build files to Windows server using SCP         
-      #   run: |     
-      #       scp $env:USERPROFILE\.ssh\id_ed25519 -r dist/my-angular-app17/* "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]":"\"C:/inetpub/wwwroot/my-angular-app17/\""
+      - name: Copy build files to Windows server using SCP         
+        run: |     
+            scp $env:USERPROFILE\.ssh\id_ed25519 -r dist/my-angular-app17/* "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]":"/c/inetpub/wwwroot/my-angular-app17/"
 
-      - name: Copy build files to Windows Server using SCP Action
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "dist/my-angular-app17/*"
-          target: "/c/inetpub/wwwroot/my-angular-app17/"        
-          tar_dereference: true
-          rm: true
+     
 
    
    
