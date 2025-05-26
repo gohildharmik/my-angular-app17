@@ -28,7 +28,7 @@ jobs:
 
       - name: Test SSH to IPv6 server
         run: |        
-          ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=yes "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
+          ssh -6 -i $env:USERPROFILE\.ssh\id_ed25519 -o StrictHostKeyChecking=no "${{ secrets.SSH_USER }}@[${{ secrets.SSH_HOST }}]" "echo ✅ Connected from self-hosted Windows runner!"
 
       # - name: Copy build files to Windows server using SCP
       #   env:
